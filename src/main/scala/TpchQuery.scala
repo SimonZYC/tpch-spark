@@ -46,7 +46,8 @@ object TpchQuery {
 
     // if set write results to hdfs, if null write to stdout
     // val OUTPUT_DIR: String = "/tpch"
-    val OUTPUT_DIR: String = "file://" + new File(".").getAbsolutePath() + "/dbgen/output"
+    // val OUTPUT_DIR: String = "file://" + new File(".").getAbsolutePath() + "/dbgen/output"
+    val OUTPUT_DIR: String = "file:///home/ec2-user/data/output"
 
     val results = new ListBuffer[(String, Float)]
 
@@ -77,14 +78,18 @@ object TpchQuery {
   def main(args: Array[String]): Unit = {
 
     var queryNum = 0;
+    var scale = 10;
     if (args.length > 0)
       queryNum = args(0).toInt
+    if (args.length > 1)
+      scale = args(1)
 
-    val conf = new SparkConf().setAppName("Simple Application")
+    val conf = new SparkConf().setAppName("TPCH Query " + queryNum.toString + ": " + scale)
     val sc = new SparkContext(conf)
 
     // read files from local FS
-    val INPUT_DIR = "file://" + new File(".").getAbsolutePath() + "/dbgen"
+    // val INPUT_DIR = "file://" + new File(".").getAbsolutePath() + "/dbgen"
+    val INPUT_DIR = "s3a://ttestspark/tpch-" + scale
 
     // read from hdfs
     // val INPUT_DIR: String = "/dbgen"
