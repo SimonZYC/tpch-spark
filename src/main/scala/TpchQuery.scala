@@ -82,14 +82,14 @@ object TpchQuery {
     if (args.length > 0)
       queryNum = args(0).toInt
     if (args.length > 1)
-      scale = args(1)
+      scale = args(1).toInt
 
     val conf = new SparkConf().setAppName("TPCH Query " + queryNum.toString + ": " + scale)
     val sc = new SparkContext(conf)
 
     // read files from local FS
     // val INPUT_DIR = "file://" + new File(".").getAbsolutePath() + "/dbgen"
-    val INPUT_DIR = "s3a://ttestspark/tpch-" + scale
+    val INPUT_DIR = "s3a://ttestspark/tpch-" + scale.toString
 
     // read from hdfs
     // val INPUT_DIR: String = "/dbgen"
